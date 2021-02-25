@@ -4,13 +4,15 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+
+
 const renderTweets = function(tweets) {
   $('#tweets-container').empty();
   tweets.forEach(tweet => {
     const tweetElement = createTweetElement(tweet);
-    $('#tweets-container').prepend(tweetElement)
-  })
-}
+    $('#tweets-container').prepend(tweetElement);
+  });
+};
 
 
 // helper function for returning tweet creation time
@@ -19,21 +21,23 @@ const timeCreated = function(time) {
   let tweetCreated = todayInMilli - time;
   let daysAgo = Math.floor(tweetCreated / 60000 / 60 / 24);
   if (daysAgo < 1) {
-    return 'Today'
-  } 
+    return 'Today';
+  }
   if (daysAgo >= 1 && daysAgo < 2) {
-    return 'Yesterday'
+    return 'Yesterday';
   }
   return `${daysAgo} days ago`;
-}
+};
+
+
 
 const createTweetElement = function(data) {
   const escape = function(str) {
     let div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
-  }
-  let tweetTime = timeCreated(data.created_at)
+  };
+  let tweetTime = timeCreated(data.created_at);
   let tweet = 
   `
   <article class="individual-tweet">
@@ -52,14 +56,15 @@ const createTweetElement = function(data) {
       <div>share / like / save</div>
     </div>
   </article>
-  `
-  return tweet
+  `;
+  return tweet;
 };
+
 
 
 $(document).ready(function() {
   
-  $('#submit-tweet').on('submit', function (event) {
+  $('#submit-tweet').on('submit', function(event) {
     
     event.preventDefault();
     
@@ -70,12 +75,12 @@ $(document).ready(function() {
       return;
     }
     
-    if(submission.length > 140) {
+    if (submission.length > 140) {
       $('.char-limit').slideDown(100);
       return;
     }
 
-    if(submission.length > 0 && submission.length <= 140) {
+    if (submission.length > 0 && submission.length <= 140) {
       if ($('.char-limit').is(':visible')) {
         $('.char-limit').hide();
       }
@@ -90,12 +95,12 @@ $(document).ready(function() {
 
       }).catch(err => {
         console.log('ERR caught in AJAX POST: ', err);
-      })
+      });
     }
-
-  })
+  });
 
   
+
   const loadTweets = function() {
     $.ajax({
       url: "/tweets",
@@ -104,10 +109,7 @@ $(document).ready(function() {
       const tweets = renderTweets(data);
     }).catch(err => {
       console.log('ERR caught in AJAX GET: ', err);
-    })
+    });
   };
-  
   loadTweets();
-
-  
-})
+});
