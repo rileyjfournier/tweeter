@@ -4,36 +4,14 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-const tweetData = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png"
-      ,
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  }
-]
-
 const renderTweets = function(tweets) {
-  let allTweets = ''; 
-  tweets.forEach(tweet => allTweets += createTweetElement(tweet));
-  return allTweets;
+  $('#tweets-container').empty();
+  tweets.forEach(tweet => {
+    const tweetElement = createTweetElement(tweet);
+    $('#tweets-container').prepend(tweetElement)
+  })
 }
+
 
 // helper function for returning tweet creation time
 const timeCreated = function(time) {
@@ -73,8 +51,55 @@ const createTweetElement = function(data) {
   return tweet
 };
 
-const $tweet = renderTweets(tweetData);
 
 $(document).ready(function() {
-  $('#tweets-container').append($tweet);
+  
+  $('#submit-tweet').on('submit', function (event) {
+    
+    event.preventDefault();
+    
+    const submission = $('#tweet-input').val();
+    
+    if (!submission) {
+      window.alert("Please enter a message 🦉");
+      return;
+    }
+
+    if(submission.length > 140) {
+      window.alert("Your tweet exceeds 140 characters");
+      return;
+    }
+
+    if(submission.length > 0 && submission.length <= 140) {
+      $.ajax({
+        url: "/tweets",
+        method: "POST",
+        data: {text: submission}
+      }).then(() => {
+
+        loadTweets();
+        $('#tweet-input').val('');
+
+      }).catch(err => {
+        console.log('ERR caught in AJAX POST: ', err);
+      })
+    }
+
+  })
+
+  
+  const loadTweets = function() {
+    $.ajax({
+      url: "/tweets",
+      method: "GET"
+    }).then((data)=> {
+      const tweets = renderTweets(data);
+    }).catch(err => {
+      console.log('ERR caught in AJAX GET: ', err);
+    })
+  };
+  
+  loadTweets();
+
+  
 })
