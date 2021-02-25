@@ -28,6 +28,11 @@ const timeCreated = function(time) {
 }
 
 const createTweetElement = function(data) {
+  const escape = function(str) {
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
   let tweetTime = timeCreated(data.created_at)
   let tweet = 
   `
@@ -40,7 +45,7 @@ const createTweetElement = function(data) {
       <div class="fade-text">${data.user.handle}</div>
     </div>
     <div class="tweet-content">
-      <div>${data.content.text}</div>
+      <div>${escape(data.content.text)}</div>
     </div>
     <div class="bottom-info">
       <div>${tweetTime}</div>
@@ -61,16 +66,19 @@ $(document).ready(function() {
     const submission = $('#tweet-input').val();
     
     if (!submission) {
-      window.alert("Please enter a message 🦉");
+      $('.char-limit').slideDown(100);
       return;
     }
-
+    
     if(submission.length > 140) {
-      window.alert("Your tweet exceeds 140 characters");
+      $('.char-limit').slideDown(100);
       return;
     }
 
     if(submission.length > 0 && submission.length <= 140) {
+      if ($('.char-limit').is(':visible')) {
+        $('.char-limit').hide();
+      }
       $.ajax({
         url: "/tweets",
         method: "POST",
