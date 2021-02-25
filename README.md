@@ -6,7 +6,9 @@ This repository is the starter code for the project: Students will fork and clon
 
 ## Screenshots
 
-
+!["Screenshot of desktop responsive view"](https://github.com/rileyjfournier/tweeter/blob/master/docs/desktop-view.png?raw=true)
+!["Screenshot of mobile responsive view"](https://github.com/rileyjfournier/tweeter/blob/master/docs/responsive-view.png?raw=true)
+!["Screenshot of hover CSS feature"](https://github.com/rileyjfournier/tweeter/blob/master/docs/css-fun.png?raw=true)
 
 ## Getting Started
 
