@@ -19,6 +19,18 @@
   margin-top: 20px;
 }
 
+#submit-tweet {
+  width: 100%;
+}
+
+.tweet-input {
+  width: 100%;
+}
+
+#tweets-container {
+  width: 100%;
+}
+
 .input {
   outline: 0;
   padding-top: 1em;
@@ -26,11 +38,11 @@
   border-color: slategray;
   background-color: transparent;
   font-family: 'Source Sans Pro', sans-serif;
-  width: 35em;
+  width: 100%;
 }
 
 .tweet-button {
-  background-color: #4056A1;
+  background-color: #F79489;
   font-family: 'Bungee', cursive;
   color: white;
 }
