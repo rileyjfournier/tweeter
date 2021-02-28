@@ -4,6 +4,7 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+ // RENDER ALL EXISTING TWEETS
 const renderTweets = function(tweets) {
   $('#tweets-container').empty();
   tweets.forEach(tweet => {
@@ -12,20 +13,39 @@ const renderTweets = function(tweets) {
   });
 };
 
-// helper function for returning tweet creation time
+// RETURN TWEET CREATION TIME
 const timeCreated = function(time) {
   const todayInMilli = new Date().getTime();
   const tweetCreated = todayInMilli - time;
   const daysAgo = Math.floor(tweetCreated / 60000 / 60 / 24);
+  const hoursAgo = Math.floor(tweetCreated / 60000 / 60)
+  const minutesAgo = Math.floor(tweetCreated / 60000)
+  const secondsAgo = Math.floor(tweetCreated / 1000)
   if (daysAgo < 1) {
-    return 'Today';
+    if (secondsAgo === 0) {
+      return `just tweeted!`
+    }
+    if (secondsAgo < 60) {
+      return `${secondsAgo} seconds ago`
+    }
+    if (minutesAgo === 1) {
+      return `${minutesAgo} minute ago`
+    }
+    if (minutesAgo < 60) {
+      return `${minutesAgo} minutes ago`
+    } else if (hoursAgo < 24) {
+      return `${hoursAgo} hours ago`
+    }
   }
-  if (daysAgo >= 1 && daysAgo < 2) {
-    return 'Yesterday';
+  if (daysAgo === 1) {
+    return `${daysAgo} day ago`;
   }
-  return `${daysAgo} days ago`;
+  if (daysAgo > 1) {
+    return `${daysAgo} days ago`;
+  }
 };
 
+// RETURNS HTML TWEET WITH USER INPUT
 const createTweetElement = function(data) {
   const escape = function(str) {
     const div = document.createElement('div');
