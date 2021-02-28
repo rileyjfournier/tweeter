@@ -58,9 +58,8 @@
   padding: 15px;
 }
 
-
 /*
-*  HOVER FUNCTIONALITY
+**  HOVER FUNCTIONALITY
 */
 .individual-tweet:hover {
   box-shadow: 5px 10px #888888;

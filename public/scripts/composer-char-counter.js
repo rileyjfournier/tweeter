@@ -4,6 +4,9 @@ const inputCounter = function() {
   if (length > 140) {
     $('#tweet-text-counter').css('color', 'red');
   }
+  if (length <= 140) {
+    $('#tweet-text-counter').css('color', 'rgb(43, 43, 43)');
+  }
   $('#tweet-text-counter').html(140 - length);
 };
 
