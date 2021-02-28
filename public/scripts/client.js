@@ -68,13 +68,18 @@ const createTweetElement = function(data) {
     </div>
     <div class="bottom-info">
       <div>${tweetTime}</div>
-      <div>share / like / save</div>
+      <div class="footer-icons">
+        <img id="flag" src="/images/flag.png">
+        <img id="share" src="/images/share.png">
+        <img id="like" src="/images/like.png"
+      </div>
     </div>
   </article>
   `;
   return tweet;
 }; 
 
+// JQUERY ON READY 
 $(document).ready(function() {
   
   $('#submit-tweet').on('submit', function(event) {
@@ -112,6 +117,7 @@ $(document).ready(function() {
     }
   });
 
+  // LOAD TWEETS FUNCTION, ALSO CALLED ON READY
   const loadTweets = function() {
     $.ajax({
       url: "/tweets",
